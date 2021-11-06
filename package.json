@@ -1,5 +1,5 @@
 {
-  "name": "zadatak9-ecommerce-app-react",
+  "name": "https://zadatak9-e-commerce-app-react.vercel.app/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -19,8 +19,8 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "start": "npm run build:css && react-scripts start",
-    "build": "npm run build:css && react-scripts build",
+    "start": "npm run build && react-scripts start",
+    "build": "npm run build && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
