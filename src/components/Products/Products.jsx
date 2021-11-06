@@ -10,7 +10,7 @@ import useStyles from './styles';
 {id: 4, name: "Fourth", description: "Fourth product", price: "$20", image : "https://www.denofgeek.com/wp-content/uploads/2021/03/best-pc-games-2021.jpg?resize=768%2C432"}
 ]*/
 
-const Products = ({products}) => {
+const Products = ({products, onAddToCart}) => {
     const classes = useStyles();
 
     return(
@@ -20,7 +20,7 @@ const Products = ({products}) => {
                 {products.map(product => {
                     return(
                         <Grid item key = {product.id} xs = {12} sm = {6}  md = {4} lg = {3}> 
-                            <Product product = {product}/>
+                            <Product product = {product} onAddToCart = {onAddToCart}/>
                         </Grid>
                     )
                 })
