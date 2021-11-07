@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
-import { Products, Navbar} from './components';
+import { Products, Navbar, Cart} from './components';
 
-const initialCart = [
+/*const initialCart = [
   {
   id: 5,
   title: "John Hardy Women's Legends Naga Gold & Silver Dragon Station Chain Bracelet",
@@ -19,11 +19,11 @@ const initialCart = [
   image: "https://fakestoreapi.com/img/61IBBVJvSDL._AC_SY879_.jpg",
   quantity: 3
 }
-]
+]*/
 const App = () => {
   
   const [products, setProducts] = useState([]);
-  const [cart, setCart] = useState(initialCart);
+  const [cart, setCart] = useState([]);
 
   const fetchProducts = async() => {
     let result = await fetch('https://fakestoreapi.com/products/');
@@ -32,8 +32,8 @@ const App = () => {
     setProducts(data);
   }
 
-  const fetchCart = () => {
-    const cart =JSON.parse(localStorage.getItem("cart"));
+  const fetchCart = async() => {
+    const cart = await JSON.parse(localStorage.getItem("cart"));
     setCart(cart || []);
   }
 
@@ -43,29 +43,37 @@ const App = () => {
     let newCart;
     if(itemFoundIndex !== -1) {
       newCart = cart.map((item, i) => 
-        i === itemFoundIndex? { ...item, quantity: item.quantity + 1 } : item
+    i === itemFoundIndex? { ...item, quantity: item.quantity + 1/*, sum: (item.quantity + 1) * item.price*/ } : item
       )
-
     }else{
       const item = products.filter(p => p.id === productId);
+      //item[0].sum = item.price;
       item[0].quantity = quantity;
+      
        newCart = [...cart, ...item];
     }
-    
-    localStorage.setItem("cart", JSON.stringify(newCart));
-    setCart(newCart);
+    localStorage.setItem("cart", JSON.stringify(newCart));    
+     setCart(newCart);
+     
   }
+
+  /*useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  },[cart])*/
+
 
   useEffect(() => {
     fetchProducts();
     fetchCart();
   }, [])
 
+
   console.log(cart)
   return (
     <div>
-      <Navbar/>
-      <Products products = {products} onAddToCart = { handleAddToCart}/>
+      <Navbar totalItems = {cart.length}/>
+      {/*<Products products = {products} onAddToCart = { handleAddToCart}/>*/}
+      <Cart cart = {cart}/>
     </div>
   )
 }
