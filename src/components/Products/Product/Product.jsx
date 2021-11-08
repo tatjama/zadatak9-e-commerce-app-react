@@ -7,27 +7,27 @@ import useStyles from './styles';
 const Product = ({product, onAddToCart}) => {
     const classes = useStyles();
     return (
-        <div>
+        <div >
             <Card className = {classes.root}>
                 <CardMedia className = {classes.media}  image = {product.image} title = {product.title}/>
-                <CardContent >
-                    <Typography variant = "h6" gutterBottom>
+                <CardContent className = { classes.cardContent}>
+                    <Typography variant = "body2" gutterBottom>
                             {product.category}
                     </Typography>
-                    <div className = {classes.cardContent}>
-                        <Typography variant = "h5" gutterBottom>
+                        <Typography variant = "h6" gutterBottom>
                             {product.title}
                         </Typography>
-                        <Typography variant = "h5" >
-                            {product.price}
-                        </Typography>                        
-                    </div>
+                                                
+                    
                     
                     <Typography variant = "body2" color = "textSecondary">
                             {product.description}
                     </Typography>
                 </CardContent>
                 <CardActions disableSpacing className = {classes.cardActions}>
+                        <Typography variant = "h6" >
+                            $ {product.price}
+                        </Typography>
                     <IconButton area-label = "Add to Card" onClick = {() => onAddToCart(product.id, 1)}>
                         <AddShoppingCart/>
                     </IconButton>

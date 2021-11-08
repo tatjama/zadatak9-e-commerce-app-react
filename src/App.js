@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import {BrowserRouter as Router, Routes, Route}  from 'react-router-dom';
 
 import { Products, Navbar, Cart} from './components';
 
@@ -37,19 +38,20 @@ const App = () => {
     setCart(cart || []);
   }
 
-  const handleAddToCart = (productId, quantity) => {
+ const handleAddToCart = (productId, quantity) => {
     const itemFoundIndex = cart.findIndex(cp => cp.id === productId);
 
     let newCart;
     if(itemFoundIndex !== -1) {
       newCart = cart.map((item, i) => 
-    i === itemFoundIndex? { ...item, quantity: item.quantity + 1/*, sum: (item.quantity + 1) * item.price*/ } : item
+    i === itemFoundIndex? { ...item, quantity: item.quantity + 1, sum: (item.quantity + 1) * item.price } : item
       )
     }else{
       const item = products.filter(p => p.id === productId);
-      //item[0].sum = item.price;
+      console.log(item)
+      item[0].sum = item.price;
       item[0].quantity = quantity;
-      
+      console.log(item[0])
        newCart = [...cart, ...item];
     }
     localStorage.setItem("cart", JSON.stringify(newCart));    
@@ -59,8 +61,36 @@ const App = () => {
 
   /*useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
-  },[cart])*/
+  },[cart])
+  
+  useEffect(() => {
+    // PUT request using fetch with async/await
+    async function updatePost() {
+        const requestOptions = {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ title: 'React Hooks PUT Request Example' })
+        };
+        const response = await fetch('https://jsonplaceholder.typicode.com/posts/1', requestOptions);
+        const data = await response.json();
+        setPostId(data.id);
+    }
 
+    updatePost();
+}, []);
+  */
+
+const handleUpdateToCartQyt = () => {
+  console.log('updateToCart')
+}
+
+const handleRemoveFromCard = () => {
+  console.log('remove from card')
+}
+
+const handleEmptyCard = () => {
+  console.log('empty card')
+}
 
   useEffect(() => {
     fetchProducts();
@@ -70,11 +100,21 @@ const App = () => {
 
   console.log(cart)
   return (
-    <div>
-      <Navbar totalItems = {cart.length}/>
-      {/*<Products products = {products} onAddToCart = { handleAddToCart}/>*/}
-      <Cart cart = {cart}/>
-    </div>
+    <Router>
+      <div>
+        <Navbar totalItems = {cart.length}/>
+          <Routes>
+            <Route exact  path = "/" element = {<Products products = {products} onAddToCart = { handleAddToCart}/>}/>
+            <Route path = "/cart" element = {
+            <Cart 
+              cart = {cart}
+              handleUpdateToCartQyt = {handleUpdateToCartQyt}
+              handleRemoveFromCard = {handleRemoveFromCard}
+              handleEmptyCard = {handleEmptyCard}
+              />}/>            
+          </Routes>
+      </div>
+    </Router>
   )
 }
 

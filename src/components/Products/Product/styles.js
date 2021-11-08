@@ -7,13 +7,13 @@ export default makeStyles(() => ({
   media: {
     height: 0,
     paddingTop: '56.25%', // 16:9
+    backgroundSize: 'contain',
   },
   cardActions: {
     display: 'flex',
     justifyContent: 'flex-end',
   },
   cardContent: {
-    display: 'flex',
-    justifyContent: 'space-between',
+    height: '100%',
   },
 }));
