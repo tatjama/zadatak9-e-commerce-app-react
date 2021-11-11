@@ -8,7 +8,7 @@ import useStyles from './styles';
 
 
 
-const ProductDetail = ({onAddToCart}) => {
+const ProductDetail = ({ url, onAddToCart }) => {
     const location = useLocation();
     const [ product, setProduct ] = useState({});
     const [ isLoading, setIsLoading ] = useState(true);
@@ -16,12 +16,12 @@ const ProductDetail = ({onAddToCart}) => {
     const id = location.pathname.split('/')[2];
     
     useEffect(() => {    
-        fetchProduct(id);
-    }, [id])
+        fetchProduct(url,id);
+    }, [url,id])
     
-    const fetchProduct = async(id) => {
+    const fetchProduct = async(url,id) => {
         setIsLoading(true)
-        const response = await fetch(`http://fakestoreapi.com/products/${id}`);
+        const response = await fetch(url+id);
         const data = await response.json();
         setProduct(data)
         setIsLoading(false)

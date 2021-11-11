@@ -142,7 +142,7 @@ const App = () => {
                             categories = {categories}
                         />}
             />
-            <Route path = "/product/:id" element = {<ProductDetail onAddToCart = { handleAddToCart} />}/>
+            <Route path = "/product/:id" element = {<ProductDetail url = {url} onAddToCart = { handleAddToCart} />}/>
             <Route path = "/cart" element = {
             <Cart 
               cart = {cart}
