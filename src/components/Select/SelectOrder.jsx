@@ -10,21 +10,22 @@ const SelectOrder = ({onSelectOrder, onSelectCategory}) => {
     const handleChange = (event) => {
         event.preventDefault();
         const selectedOrder = `?sort=${orderSelectRef.current.value}`;
-        console.log(selectedOrder);
+        
         onSelectOrder(selectedOrder);
     }
 
     return(
         <form onChange = {handleChange}>
-                <InputLabel htmlFor="order"> <Typography variant="body2"> Order:</Typography></InputLabel>
+                <InputLabel htmlFor="order">
+                     <Typography variant="body2"> Order:</Typography>
+                </InputLabel>
                 <select className = { classes.selectForm } name="order"  ref = {orderSelectRef} >
                     {['asc', 'desc'].map((order) => {
                         return (                            
                         <option className = {classes.text} value = {order} key = {order}> {order} </option>
                         )
                         })
-                    }
-                    
+                    }                    
                 </select>
             </form>
     )

@@ -10,10 +10,10 @@ const Cart = ({cart, handleUpdateToCartQyt, handleRemoveFromCard, handleEmptyCar
 
     const EmptyCart = () => {
         return( 
-        <Typography variant = 'subtitle1'>
-            You have no items in your cart.
-            <Link className={classes.link} to ="/">Start adding some</Link>
-        </Typography>
+            <Typography variant = 'subtitle1'>
+                You have no items in your cart.
+                <Link className={classes.link} to ="/">Start adding some</Link>
+            </Typography>
         )
     }
 
@@ -35,7 +35,9 @@ const Cart = ({cart, handleUpdateToCartQyt, handleRemoveFromCard, handleEmptyCar
         return(
             <>
                 <div className = {classes.cardDetails}>
-                    <Typography className= {classes.subtotal} variant = "h4" > Subtotal:  {sum } </Typography >
+                    <Typography className= {classes.subtotal} variant = "h5" > 
+                        Subtotal:  {sum } 
+                    </Typography >
                     <Button 
                         className = {classes.emptyButton} 
                         size = "large" 
@@ -54,9 +56,9 @@ const Cart = ({cart, handleUpdateToCartQyt, handleRemoveFromCard, handleEmptyCar
                         onClick = {handleCheckOut}
                     >Checkout</Button>
                 </div>
-                <Grid container spacing = {3}>
+                <Grid container justifyContent = "center" spacing = {3}>
                     { cart.map((item) => (                
-                        <Grid item xs = {12} sm = {4} key = {item.id}>
+                        <Grid  item xs = {12} sm = {4} key = {item.id}>
                             <CartItem 
                                 item = {item} 
                                 onHandleUpdateToCardQyt = {handleUpdateToCartQyt}
@@ -74,7 +76,7 @@ const Cart = ({cart, handleUpdateToCartQyt, handleRemoveFromCard, handleEmptyCar
     return(
         <Container>
             <div className={ classes.toolbar }/>
-            <Typography className={ classes.title } variant = "h3" gutterBottom>
+            <Typography className={ classes.title } variant = "h4" gutterBottom>
                 Shopping cart
             </Typography>
             { !cart.length? <EmptyCart/>: <FilledCart/> }

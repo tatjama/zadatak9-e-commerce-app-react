@@ -11,7 +11,6 @@ const CartItem = ({item, onHandleUpdateToCardQyt, onHandleRemoveFromCard }) => {
             <CardContent className={classes.cardContent }>
                 <Typography variant = "body1"> {item.title} </Typography>
                 <Typography variant = "h6">$ {item.price.toFixed(2)}</Typography>
-
             </CardContent>
             <CardActions className = {classes.cardActions}>
                 <div className = {classes.buttons}>

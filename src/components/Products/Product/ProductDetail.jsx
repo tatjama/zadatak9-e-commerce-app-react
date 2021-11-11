@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Loader from 'react-loader-spinner';
 import { useLocation } from 'react-router';
+
 import { Grid, Card, CardMedia, CardContent, CardActions, Typography, IconButton} from "@material-ui/core";
 import { AddShoppingCart } from '@material-ui/icons';
-
 import useStyles from './styles';
-
-
 
 const ProductDetail = ({ cart, url, onAddToCart }) => {
     const location = useLocation();
@@ -29,7 +27,6 @@ const ProductDetail = ({ cart, url, onAddToCart }) => {
         
         setProduct(data);
         setIsLoading(false);
-        console.log(data)
     }
 
     useEffect(() => {isProductInCart()})
@@ -37,9 +34,7 @@ const ProductDetail = ({ cart, url, onAddToCart }) => {
     const isProductInCart = () => {
         let itemFoundIndex = cart.products.findIndex(product => product.id === id);
         if (itemFoundIndex !== -1){ setIsInCart(true) }
-    }
-
-    
+    }    
     
     if(isLoading){
         return(
@@ -73,15 +68,19 @@ const ProductDetail = ({ cart, url, onAddToCart }) => {
                             </Typography>
                         </CardContent>
                         <CardActions disableSpacing className = {classes.cardActions}>
-                        <Typography variant = "h6" >
-                            $ {product.price.toFixed(2)}
-                        </Typography>
-                        {isInCart? <Typography variant = "body2">in Cart</Typography>
-                        :   <IconButton area-label = "Add to Card" onClick = {() => onAddToCart(product.id, 1)} >
-                               <AddShoppingCart/>
-                            </IconButton>
-                        }                        
-                    </CardActions>
+                            <Typography variant = "h6" >
+                                $ {product.price.toFixed(2)}
+                            </Typography>
+                            {
+                            isInCart? <Typography variant = "body2">in Cart</Typography>
+                            :   <IconButton 
+                                    area-label = "Add to Card" 
+                                    onClick = {() => onAddToCart(product.id, 1)} 
+                                >
+                                    <AddShoppingCart/>
+                                </IconButton>
+                            }                        
+                        </CardActions>
                     </Card>                    
                 </Grid>  
             </Grid>

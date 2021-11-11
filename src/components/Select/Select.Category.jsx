@@ -10,7 +10,7 @@ const SelectCategory = ({categories, onSelectCategory}) => {
     const handleChange = (event) => {
         event.preventDefault();
         const selectedCategory = categorySelectRef.current.value && `category/${categorySelectRef.current.value}`;
-        console.log(selectedCategory);
+        
         onSelectCategory(selectedCategory);
     }
 
@@ -18,7 +18,9 @@ const SelectCategory = ({categories, onSelectCategory}) => {
 
     return(
             <form onChange = {handleChange}>
-                <InputLabel htmlFor="category"> <Typography variant="body2"> Category:</Typography></InputLabel>
+                <InputLabel htmlFor="category"> 
+                    <Typography variant="body2"> Category:</Typography>
+                </InputLabel>
                 <select className = {classes.selectForm} name="category"  ref = {categorySelectRef} >
                     <option className = {classes.text}  value = "" key = "all"> all </option>
                     {categories.map((category) => {

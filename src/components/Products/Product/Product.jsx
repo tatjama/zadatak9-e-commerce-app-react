@@ -7,6 +7,7 @@ import useStyles from './styles';
 
 const Product = ({product, onAddToCart}) => {
     const classes = useStyles();
+
     return (
         <div className = {classes.product} >
             <Card className = {classes.root}>
@@ -25,12 +26,15 @@ const Product = ({product, onAddToCart}) => {
                         <Typography variant = "h6" >
                             $ {product.price.toFixed(2)}
                         </Typography>
-                        {product.inCart? <Typography variant = "body2">in Cart</Typography>
-                        : <IconButton area-label = "Add to Card" onClick = {() => onAddToCart(product.id, 1)}>
-                        <AddShoppingCart/>
-                    </IconButton>
-                        }
-                    
+                        {
+                            product.inCart? <Typography variant = "body2">in Cart</Typography>
+                            :  <IconButton 
+                                    area-label = "Add to Card" 
+                                    onClick = {() => onAddToCart(product.id, 1)}
+                                >
+                                    <AddShoppingCart/>
+                                </IconButton>
+                        }                    
                 </CardActions>
             </Card>
         </div>

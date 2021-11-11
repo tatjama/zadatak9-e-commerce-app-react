@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {BrowserRouter as Router, Routes, Route}  from 'react-router-dom';
 import Loader from 'react-loader-spinner';
 
-import { Products, Navbar, Cart, Modal, ModalThankYou} from './components';
-import ProductDetail from "./components/Products/Product/ProductDetail";
+import { Products, ProductDetail, Navbar, Cart, Modal, ModalThankYou} from './components';
 
 import useStyles from './styles';
 
@@ -51,8 +50,8 @@ const App = () => {
 
   const fetchCart = async() => {
     const cart = await JSON.parse(localStorage.getItem("cart"));
-    setCart(cart || initialCart);
-    
+
+    setCart(cart || initialCart);    
   }
 
   useEffect(() => {
@@ -61,20 +60,20 @@ const App = () => {
     fetchCart();
   }, [])
 
-  const handleSelectedCategory = (selectedCategory) => {
+  const handleSelectedCategory = async (selectedCategory) => {
     setCategory(selectedCategory);
-    console.log(selectedCategory)
-    fetch(url + selectedCategory + order)
-    .then(res=>res.json())
-    .then(data=>setProducts(data))
+    let response = await  fetch(url + selectedCategory + order);
+    let data = await response.json();
+
+    setProducts(data);
   }
 
   const handleSelectOrder = async(selectedOrder) => {
     setOrder(selectedOrder);
-    let result = await fetch(url + category  + selectedOrder);
-    let data = await result.json();
+    let response = await fetch(url + category  + selectedOrder);
+    let data = await response.json();
 
-    setProducts(data)
+    setProducts(data);
   }
 
 
@@ -98,8 +97,8 @@ const App = () => {
 
   const handleItemAdded = () => {
     setIsItemAdded(!isItemAdded);
-    console.log(isItemAdded)
     }
+
   const handleCartSent = () => {
     setIsCartSent(!isCartSent);
     }
@@ -112,7 +111,6 @@ const App = () => {
 
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
-    console.log(cart)
   }, [cart])
 
 
@@ -146,16 +144,16 @@ const App = () => {
     setCart(initialCart);
   }
 
-  const postCartToAPI = (cart) => {
-    fetch('https://fakestoreapi.com/carts',{
+  const postCartToAPI = async (cart) => {
+  let response = await  fetch('https://fakestoreapi.com/carts',{
     method:"POST",
     body:JSON.stringify(cart)
-  }).then(res=>res.json())
-  .then(json=>{
-    setOrderId(json._id); 
-    handleEmptyCard();   
-    setIsCartSent(true);
   })
+  let data = await response.json();
+
+    setOrderId(data._id);
+    handleEmptyCard();   
+    setIsCartSent(true);  
   }
 
   const handleCheckOut = () => {
@@ -166,12 +164,9 @@ const App = () => {
         return {productId: product.id, quantity: product.quantity}
         })     
     };
-    console.log(cartToAPIRecords);
     postCartToAPI(cartToAPIRecords);
   }
 
-  console.log(cart)
-  
   if(isLoading){
     return(
       <div className = {classes.loaderContainer}>
