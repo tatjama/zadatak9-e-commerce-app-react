@@ -14,6 +14,7 @@ const ProductDetail = ({ cart, url, onAddToCart }) => {
     const [ product, setProduct ] = useState({});
     const [ isLoading, setIsLoading ] = useState(true);
     const [ isInCart, setIsInCart ] = useState(false);
+    const [ errorMessage, setErrorMessage ] = useState('');
     
     
     useEffect(() => {    
@@ -22,11 +23,18 @@ const ProductDetail = ({ cart, url, onAddToCart }) => {
     
     const fetchProduct = async(url,id) => {
         setIsLoading(true)
-        const response = await fetch(url+id);
-        const data = await response.json();
+        try{
+            const response = await fetch(url+id);
+            const data = await response.json();
         
-        setProduct(data);
-        setIsLoading(false);
+            setProduct(data);
+            setIsLoading(false);
+        }catch(e){
+            console.log(e);
+            setIsLoading(false);
+            setErrorMessage(e.message);
+        }
+        
     }
 
     useEffect(() => {isProductInCart()})
@@ -40,6 +48,15 @@ const ProductDetail = ({ cart, url, onAddToCart }) => {
         return(
           <div className = {classes.loaderContainer}>
               <Loader type="Grid" className = {classes.loader}  />
+          </div>
+        )
+      }
+
+      if(errorMessage){
+        return(
+          <div>
+            <h1> Seems that something is wrong...!</h1>
+            <h4>Error {errorMessage}</h4>
           </div>
         )
       }

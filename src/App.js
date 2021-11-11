@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {BrowserRouter as Router, Routes, Route}  from 'react-router-dom';
 import Loader from 'react-loader-spinner';
 
-import { Products, ProductDetail, Navbar, Cart, Modal, ModalThankYou} from './components';
+import { Products, ProductDetail, Navbar, Cart, Modal, ModalThankYou } from './components';
 
 import useStyles from './styles';
 
@@ -24,34 +24,53 @@ const App = () => {
   const [ itemTitle, setItemTitle ] = useState('');
   const [ isCartSent, setIsCartSent ] = useState(false);
   const [ orderId, setOrderId ] = useState(0);
+  const [ errorMessage, setErrorMessage ] = useState('');
 
   const url = 'https://fakestoreapi.com/products/';
 
   const fetchProducts = async() => {
-    let result = await fetch(url);
-    let data = await result.json();
+    try {
+      let result = await fetch(url);
+      let data = await result.json();
     
-    let cart = await JSON.parse(localStorage.getItem("cart"));
-    data.map((product) => {
-      const itemFoundIndex = cart.products.findIndex(cp => cp.id === product.id);
-      if(itemFoundIndex !== -1) {product.inCart = true}
-      return product;
-    })
-    setIsLoading(false);
-    setProducts(data);
+      let cart = await JSON.parse(localStorage.getItem("cart"));
+      data.map((product) => {
+        const itemFoundIndex = cart.products.findIndex(cp => cp.id === product.id);
+        if(itemFoundIndex !== -1) {product.inCart = true}
+        return product;
+      })
+      setIsLoading(false);
+      setProducts(data);
+    }catch(e) {
+      console.log(e);
+      setIsLoading(false);
+      setErrorMessage(e.message);
+    }
   }
 
   const fetchCategories = async() => {
-    let result = await fetch(`${url}categories`);
-    let data = await result.json();
-
-    setCategories(data);
+    try{
+      let result = await fetch(`${url}categories`);
+      let data = await result.json();
+  
+      setCategories(data);
+    }catch(e){
+      console.log(e);
+      setIsLoading(false);
+      setErrorMessage(e.message);
+    }    
   }
 
   const fetchCart = async() => {
-    const cart = await JSON.parse(localStorage.getItem("cart"));
+    try{
+      const cart = await JSON.parse(localStorage.getItem("cart"));
 
-    setCart(cart || initialCart);    
+      setCart(cart || initialCart);
+    }catch(e){
+      console.log(e);
+      setIsLoading(false);
+      setErrorMessage(e.message);
+    }        
   }
 
   useEffect(() => {
@@ -62,36 +81,43 @@ const App = () => {
 
   const handleSelectedCategory = async (selectedCategory) => {
     setCategory(selectedCategory);
-    let response = await  fetch(url + selectedCategory + order);
-    let data = await response.json();
+    try{
+      let response = await  fetch(url + selectedCategory + order);
+      let data = await response.json();
 
-    setProducts(data);
+      setProducts(data);
+    } catch(e){
+      console.log(e);
+      setIsLoading(false);
+      setErrorMessage(e.message);
+    }
+    
   }
 
   const handleSelectOrder = async(selectedOrder) => {
-    setOrder(selectedOrder);
+    try{
+      setOrder(selectedOrder);
     let response = await fetch(url + category  + selectedOrder);
     let data = await response.json();
 
     setProducts(data);
+    }catch(e){
+      console.log(e);
+      setIsLoading(false);
+      setErrorMessage(e.message);
+    }    
   }
 
 
   const addingItemToCart =(productId, quantity) => {
-    const itemFoundIndex = cart.products.findIndex(cp => cp.id === productId);
-    let newCart = {...cart};
-    if(itemFoundIndex !== -1) {
-      newCart.products = cart.products.map((item, i) => 
-    i === itemFoundIndex? { ...item, quantity: item.quantity + 1, sum: (item.quantity + 1) * item.price } : item
-      )
-    }else{
+      let newCart = {...cart};    
       const item = products.filter(p => p.id === productId);
       item[0].sum = item[0].price;
       item[0].quantity = quantity;
       item[0].inCart = true;
       setItemTitle(item[0].title);
       newCart.products = [...cart.products, item[0]];
-    }
+    
     return newCart;
   }
 
@@ -145,15 +171,21 @@ const App = () => {
   }
 
   const postCartToAPI = async (cart) => {
-  let response = await  fetch('https://fakestoreapi.com/carts',{
-    method:"POST",
-    body:JSON.stringify(cart)
-  })
-  let data = await response.json();
+    try{
+      let response = await  fetch('https://fakestoreapi.com/carts',{
+      method:"POST",
+      body:JSON.stringify(cart)
+      })
+    let data = await response.json();
 
     setOrderId(data._id);
     handleEmptyCard();   
-    setIsCartSent(true);  
+    setIsCartSent(true);
+    }catch(e){
+      console.log(e);
+      setIsLoading(false);
+      setErrorMessage(e.message);
+    }    
   }
 
   const handleCheckOut = () => {
@@ -171,6 +203,15 @@ const App = () => {
     return(
       <div className = {classes.loaderContainer}>
           <Loader type="Grid" className = {classes.loader}  />
+      </div>
+    )
+  }
+
+  if(errorMessage){
+    return(
+      <div>
+        <h1> Seems that something is wrong...!</h1>
+        <h4>Error {errorMessage}</h4>
       </div>
     )
   }
