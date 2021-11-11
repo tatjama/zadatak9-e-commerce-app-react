@@ -32,6 +32,12 @@ const App = () => {
     let result = await fetch(url);
     let data = await result.json();
     
+    let cart = await JSON.parse(localStorage.getItem("cart"));
+    data.map((product) => {
+      const itemFoundIndex = cart.products.findIndex(cp => cp.id === product.id);
+      if(itemFoundIndex !== -1) {product.inCart = true}
+      return product;
+    })
     setIsLoading(false);
     setProducts(data);
   }
@@ -122,13 +128,21 @@ const App = () => {
   }
   
   const handleRemoveFromCard = (productId) => {
-    let newCart = {...cart};
-    newCart.products = cart.products.filter( (item) => item.id !== productId);
-
-    setCart(newCart);
+    let tempCart = {...cart};
+    tempCart.products = cart.products.filter( (item) => item.id !== productId);
+    let tempProducts = [...products];
+    tempProducts.map(product => {
+      if(product.id === productId) {product.inCart = false}
+      return product;
+    }) 
+    setProducts(tempProducts);
+    setCart(tempCart);
   }
   
   const handleEmptyCard = () => {
+    let tempProducts = [...products];
+    tempProducts.forEach(product => {product.inCart = false})
+    setProducts(tempProducts);
     setCart(initialCart);
   }
 
@@ -139,7 +153,7 @@ const App = () => {
   }).then(res=>res.json())
   .then(json=>{
     setOrderId(json._id); 
-    setCart(initialCart);    
+    handleEmptyCard();   
     setIsCartSent(true);
   })
   }
@@ -183,7 +197,7 @@ const App = () => {
                             categories = {categories}
                         />}
             />
-            <Route path = "/product/:id" element = {<ProductDetail url = {url} onAddToCart = { handleAddToCart} />}/>
+            <Route path = "/product/:id" element = {<ProductDetail cart = { cart } url = {url} onAddToCart = { handleAddToCart} />}/>
             <Route path = "/cart" element = {
             <Cart 
               cart = {cart.products}
@@ -203,31 +217,3 @@ const App = () => {
 export default App;
 
 
-/**
- * const initialProductsSettings = async (data) => {
-     await fetchCart();
-    console.log(cart)
-    console.log(data)
-    data.map((product) => {
-      const itemFoundIndex = cart.products.findIndex(cp => cp.id === product.id);
-      console.log(itemFoundIndex);
-      if(itemFoundIndex !== -1) {product.inCart = true}
-      return product;
-    })
-    return data
-  }
-
-  const fetchProducts = async() => {
-    let result = await fetch(url);
-    let data = await result.json();
-    data.forEach(product => {
-      product.inCart = false
-    })
-    console.log(data);
-    let initialProducts = initialProductsSettings(data);
-    console.log(initialProducts)
-    setIsLoading(false);
-    setProducts(initialProducts);
-  }
-
- */

@@ -8,12 +8,15 @@ import useStyles from './styles';
 
 
 
-const ProductDetail = ({ url, onAddToCart }) => {
+const ProductDetail = ({ cart, url, onAddToCart }) => {
     const location = useLocation();
+    const classes = useStyles();
+    const id = location.pathname.split('/')[2]*1;
+    
     const [ product, setProduct ] = useState({});
     const [ isLoading, setIsLoading ] = useState(true);
-    const classes = useStyles();
-    const id = location.pathname.split('/')[2];
+    const [ isInCart, setIsInCart ] = useState(false);
+    
     
     useEffect(() => {    
         fetchProduct(url,id);
@@ -23,10 +26,20 @@ const ProductDetail = ({ url, onAddToCart }) => {
         setIsLoading(true)
         const response = await fetch(url+id);
         const data = await response.json();
-        setProduct(data)
-        setIsLoading(false)
+        
+        setProduct(data);
+        setIsLoading(false);
         console.log(data)
     }
+
+    useEffect(() => {isProductInCart()})
+
+    const isProductInCart = () => {
+        let itemFoundIndex = cart.products.findIndex(product => product.id === id);
+        if (itemFoundIndex !== -1){ setIsInCart(true) }
+    }
+
+    
     
     if(isLoading){
         return(
@@ -59,15 +72,17 @@ const ProductDetail = ({ url, onAddToCart }) => {
                                 {product.description}
                             </Typography>
                         </CardContent>
-                    </Card>
-                    <CardActions disableSpacing className = {classes.cardActions}>
+                        <CardActions disableSpacing className = {classes.cardActions}>
                         <Typography variant = "h6" >
                             $ {product.price.toFixed(2)}
                         </Typography>
-                        <IconButton area-label = "Add to Card" onClick = {() => onAddToCart(product.id, 1)} >
-                            <AddShoppingCart/>
-                        </IconButton>
+                        {isInCart? <Typography variant = "body2">in Cart</Typography>
+                        :   <IconButton area-label = "Add to Card" onClick = {() => onAddToCart(product.id, 1)} >
+                               <AddShoppingCart/>
+                            </IconButton>
+                        }                        
                     </CardActions>
+                    </Card>                    
                 </Grid>  
             </Grid>
         </div>

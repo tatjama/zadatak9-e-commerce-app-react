@@ -27,6 +27,7 @@ export default makeStyles((theme) => ({
   cardActions: {
     display: 'flex',
     justifyContent: 'space-between',
+    alignItems: 'center',
   },
   cardContent: {
     height: '100%',
