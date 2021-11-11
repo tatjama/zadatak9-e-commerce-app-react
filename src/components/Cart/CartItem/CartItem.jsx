@@ -9,8 +9,8 @@ const CartItem = ({item, onHandleUpdateToCardQyt, onHandleRemoveFromCard }) => {
         <Card className={classes.card}>
             <CardMedia image = { item.image } alt = { item.title } className = { classes.media}/>
             <CardContent className={classes.cardContent }>
-                <Typography variant = "h5"> {item.title} </Typography>
-                <Typography variant = "h6"> {item.price} </Typography>
+                <Typography variant = "body1"> {item.title} </Typography>
+                <Typography variant = "h6">$ {item.price.toFixed(2)}</Typography>
 
             </CardContent>
             <CardActions className = {classes.cardActions}>
@@ -18,7 +18,7 @@ const CartItem = ({item, onHandleUpdateToCardQyt, onHandleRemoveFromCard }) => {
                     <Button 
                         type = "button" 
                         size = "small"
-                        onClick = {() => onHandleUpdateToCardQyt(item.id, item.quantity - 1)}
+                        onClick = {() =>(item.quantity > 0) && onHandleUpdateToCardQyt(item.id, item.quantity - 1)}
                     >-</Button>
                         <Typography>{item.quantity}</Typography>
                     <Button 

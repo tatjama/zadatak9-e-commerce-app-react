@@ -8,7 +8,7 @@ export default makeStyles(() => ({
     justifyContent: 'space-between',
   },
   media: {
-    height: 260,
+    height: 200,
     backgroundSize: 'contain',
   },
   cardContent: {
@@ -16,6 +16,7 @@ export default makeStyles(() => ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
+    textAlign: 'center',
   },
   cartActions: {
     justifyContent: 'space-between',
