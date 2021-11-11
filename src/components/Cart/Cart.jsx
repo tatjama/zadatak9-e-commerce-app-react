@@ -5,7 +5,7 @@ import  CartItem  from './CartItem/CartItem';
 
 import useStyles from './styles';
 
-const Cart = ({cart, handleUpdateToCartQyt, handleRemoveFromCard, handleEmptyCard}) => {
+const Cart = ({cart, handleUpdateToCartQyt, handleRemoveFromCard, handleEmptyCard, handleCheckOut}) => {
     const classes = useStyles();
 
     const EmptyCart = () => {
@@ -35,7 +35,7 @@ const Cart = ({cart, handleUpdateToCartQyt, handleRemoveFromCard, handleEmptyCar
         return(
             <>
                 <div className = {classes.cardDetails}>
-                    <Typography variant = "h4" > Subtotal:  {sum } </Typography >
+                    <Typography className= {classes.subtotal} variant = "h4" > Subtotal:  {sum } </Typography >
                     <Button 
                         className = {classes.emptyButton} 
                         size = "large" 
@@ -51,6 +51,7 @@ const Cart = ({cart, handleUpdateToCartQyt, handleRemoveFromCard, handleEmptyCar
                         type = "button" 
                         variant = "contained" 
                         color = "primary"
+                        onClick = {handleCheckOut}
                     >Checkout</Button>
                 </div>
                 <Grid container spacing = {3}>

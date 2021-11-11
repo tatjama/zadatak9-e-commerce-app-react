@@ -5,6 +5,9 @@ export default makeStyles((theme) => ({
   title: {
     marginTop: '5%',
   },
+  subtotal: {
+    width: "300px",
+  },
   emptyButton: {
     minWidth: '150px',
     [theme.breakpoints.down('xs')]: {
@@ -25,6 +28,7 @@ export default makeStyles((theme) => ({
     marginTop: '10%',
     width: '100%',
     justifyContent: 'space-between',
+    flexWrap: 'wrap',
     marginBottom: '50px'
   },
 }));

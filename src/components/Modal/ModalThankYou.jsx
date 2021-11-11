@@ -3,22 +3,23 @@ import { useNavigate } from 'react-router-dom';
 import { Typography, Card, CardActions, CardContent , Button} from "@material-ui/core";
 import useStyles from './styles';
 
-const Modal = ({itemTitle, isItemAdded, handleItemAdded}) => {
+const ModalThankYou = ({orderId, isCartSent, handleCartSent}) => {
     const classes = useStyles();
     const navigate = useNavigate();
+    
     const onClose = () => {
-        handleItemAdded(!isItemAdded)
+        navigate('/');
+        handleCartSent(!isCartSent)
         
     }
-    const onCheckOut = () => {
-        navigate('/cart');
-        handleItemAdded(!isItemAdded);
+    const onCheckOut = () => {        
+        handleCartSent(!isCartSent);
     }
     return(
-        <Card className = { classes.container } >
+        <Card className = { classes.containerThankYou } >
             <CardContent className = { classes.modal}>
                 <Typography variant = "h6" gutterBottom>
-                    {itemTitle} is successfully added to your cart!
+                    Thank You! Your order number is {orderId}.
                 </Typography>
              
             <CardActions className = { classes.cardActions}>
@@ -34,4 +35,4 @@ const Modal = ({itemTitle, isItemAdded, handleItemAdded}) => {
     )
 }
 
-export default Modal;
+export default ModalThankYou;

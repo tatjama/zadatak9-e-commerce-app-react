@@ -9,9 +9,16 @@ export default makeStyles(() => ({
         top: '0',
         left: '0',
     },
+    containerThankYou: {
+        width: '100%',
+        height: '100%',
+        backgroundColor: 'white',
+        position: 'fixed',
+        top: '0',
+        left: '0',
+    },
     modal: {
         width: '300px',
-        height: '150px',
         backgroundColor: '#FFF',
         borderRadius: '10px',
         position: 'fixed',

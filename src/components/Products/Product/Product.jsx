@@ -25,9 +25,12 @@ const Product = ({product, onAddToCart}) => {
                         <Typography variant = "h6" >
                             $ {product.price.toFixed(2)}
                         </Typography>
-                    <IconButton area-label = "Add to Card" onClick = {() => onAddToCart(product.id, 1)}>
+                        {product.inCart? <Typography variant = "body2">in Cart</Typography>
+                        : <IconButton area-label = "Add to Card" onClick = {() => onAddToCart(product.id, 1)}>
                         <AddShoppingCart/>
                     </IconButton>
+                        }
+                    
                 </CardActions>
             </Card>
         </div>
