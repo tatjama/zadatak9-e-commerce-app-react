@@ -1,46 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Loader from 'react-loader-spinner';
-import { useLocation } from 'react-router';
+import useFetchProduct from '../../../hooks/useFetchProduct'
 
 import { Grid, Card, CardMedia, CardContent, CardActions, Typography, IconButton} from "@material-ui/core";
 import { AddShoppingCart } from '@material-ui/icons';
 import useStyles from './styles';
 
 const ProductDetail = ({ cart, url, onAddToCart }) => {
-    const location = useLocation();
     const classes = useStyles();
-    const id = location.pathname.split('/')[2]*1;
-    
-    const [ product, setProduct ] = useState({});
-    const [ isLoading, setIsLoading ] = useState(true);
-    const [ isInCart, setIsInCart ] = useState(false);
-    const [ errorMessage, setErrorMessage ] = useState('');
-    
-    useEffect(() => {isProductInCart()})
-
-    const isProductInCart = () => {
-        let itemFoundIndex = cart.products.findIndex(product => product.id === id);
-        if (itemFoundIndex !== -1){ setIsInCart(true) }
-    }
-    
-    useEffect(() => {    
-        fetchProduct(url,id);
-    }, [url,id])
-    
-    const fetchProduct = async(url,id) => {
-        setIsLoading(true)
-        try{
-            const response = await fetch(url+id);
-            const data = await response.json();
-        
-            setProduct(data);
-            setIsLoading(false);
-        }catch(e){
-            console.log(e);
-            setIsLoading(false);
-            setErrorMessage(e.message);
-        }        
-    }      
+    const {product, isLoading, isInCart, errorMessage} = useFetchProduct(cart, url);
     
     if(isLoading){
         return(
