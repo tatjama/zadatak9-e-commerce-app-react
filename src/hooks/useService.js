@@ -39,7 +39,6 @@ const useService = () => {
         setIsLoading(false);
         setProducts(data);
       }catch(e) {
-        console.log(e);
         setIsLoading(false);
         setErrorMessage(e.message);
       }
@@ -52,7 +51,6 @@ const useService = () => {
     
         setCategories(data);
       }catch(e){
-        console.log(e);
         setIsLoading(false);
         setErrorMessage(e.message);
       }    
@@ -64,7 +62,6 @@ const useService = () => {
   
         setCart(cart || initialCart);
       }catch(e){
-        console.log(e);
         setIsLoading(false);
         setErrorMessage(e.message);
       }        
@@ -84,7 +81,6 @@ const useService = () => {
   
         setProducts(data);
       } catch(e){
-        console.log(e);
         setIsLoading(false);
         setErrorMessage(e.message);
       }
@@ -99,7 +95,6 @@ const useService = () => {
   
       setProducts(data);
       }catch(e){
-        console.log(e);
         setIsLoading(false);
         setErrorMessage(e.message);
       }    
@@ -170,7 +165,6 @@ const useService = () => {
       handleEmptyCard();   
       setIsCartSent();
       }catch(e){
-        console.log(e);
         setIsLoading(false);
         setErrorMessage(e.message);
       }    
