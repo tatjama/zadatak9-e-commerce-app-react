@@ -27,13 +27,15 @@ const Product = ({product, onAddToCart}) => {
                             $ {product.price.toFixed(2)}
                         </Typography>
                         {
-                            product.inCart? <Typography variant = "body2">in Cart</Typography>
-                            :  <IconButton 
-                                    area-label = "Add to Card" 
-                                    onClick = {() => onAddToCart(product.id, 1)}
-                                >
-                                    <AddShoppingCart/>
-                                </IconButton>
+                            product.inCart? <Typography variant = "body2" color = "secondary">
+                                                in Cart
+                                            </Typography>
+                                            :<IconButton 
+                                                area-label = "Add to Card" 
+                                                onClick = {() => onAddToCart(product.id, 1)}
+                                            >
+                                                <AddShoppingCart/>
+                                            </IconButton>
                         }                    
                 </CardActions>
             </Card>

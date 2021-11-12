@@ -16,6 +16,12 @@ const ProductDetail = ({ cart, url, onAddToCart }) => {
     const [ isInCart, setIsInCart ] = useState(false);
     const [ errorMessage, setErrorMessage ] = useState('');
     
+    useEffect(() => {isProductInCart()})
+
+    const isProductInCart = () => {
+        let itemFoundIndex = cart.products.findIndex(product => product.id === id);
+        if (itemFoundIndex !== -1){ setIsInCart(true) }
+    }
     
     useEffect(() => {    
         fetchProduct(url,id);
@@ -33,16 +39,8 @@ const ProductDetail = ({ cart, url, onAddToCart }) => {
             console.log(e);
             setIsLoading(false);
             setErrorMessage(e.message);
-        }
-        
-    }
-
-    useEffect(() => {isProductInCart()})
-
-    const isProductInCart = () => {
-        let itemFoundIndex = cart.products.findIndex(product => product.id === id);
-        if (itemFoundIndex !== -1){ setIsInCart(true) }
-    }    
+        }        
+    }      
     
     if(isLoading){
         return(
@@ -52,7 +50,7 @@ const ProductDetail = ({ cart, url, onAddToCart }) => {
         )
       }
 
-      if(errorMessage){
+    if(errorMessage){
         return(
           <div>
             <h1> Seems that something is wrong...!</h1>
@@ -61,6 +59,7 @@ const ProductDetail = ({ cart, url, onAddToCart }) => {
         )
       }
 
+      if(Object.keys(product).length){
     return (
         <div>
             <Grid container spacing={0} direction="column" alignItems="center" justifyContent="center" style={{ minHeight: '100vh' }}>
@@ -89,20 +88,31 @@ const ProductDetail = ({ cart, url, onAddToCart }) => {
                                 $ {product.price.toFixed(2)}
                             </Typography>
                             {
-                            isInCart? <Typography variant = "body2">in Cart</Typography>
-                            :   <IconButton 
-                                    area-label = "Add to Card" 
-                                    onClick = {() => onAddToCart(product.id, 1)} 
-                                >
-                                    <AddShoppingCart/>
-                                </IconButton>
+                            isInCart?   <Typography  variant = "body2" color = "primary">
+                                           {product.title} is already in Cart
+                                        </Typography>
+                                      : <IconButton 
+                                            area-label = "Add to Card" 
+                                            onClick = {() => onAddToCart(product.id, 1)} 
+                                        >
+                                             <AddShoppingCart/>
+                                        </IconButton>
                             }                        
                         </CardActions>
                     </Card>                    
                 </Grid>  
             </Grid>
         </div>
-    )
+    )}else{
+        return(
+            <div>
+                <div className = {classes.toolbar}/>
+              <h1> Seems that something is wrong...!</h1>
+              <h4>Error {errorMessage}</h4>
+            </div>
+          )
+    }
+    
 }
 
 export default ProductDetail;
