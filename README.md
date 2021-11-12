@@ -1,70 +1,90 @@
-# Getting Started with Create React App
+# Tatjana Marković E commerce React app solution
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Table of contents
 
-## Available Scripts
+  - [Overview](#overview)
+  - [The challenge](#the-challenge)
+  - [Screenshot](#screenshot)
+  - [Links](#links)
+  - [My process](#my-process)
+  - [Built with](#built-with)
+  - [Author](#author)
 
-In the project directory, you can run:
+## Overview
+![Overview](./screenshots/eCommerce.jpg)
 
-### `npm start`
+- On first load
+  1. Load store with products from  https://fakestoreapi.com/
+  2. Load category list from https://fakestoreapi.com/
+  3. Create cart
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- On refresh: 
+  1. Cart is saved in Local Storage and will be automatically loaded
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- On check out:
+    1. Cart is POST ed to https://fakestoreapi.com
+    2. Response from https://fakestoreapi.com/ is returned and will be display to user as order id
+    3. Cart is empty
 
-### `npm test`
+- User can:
+    1. See All products from store 
+    2. Filter products by category and 
+    3. See Single Product Detail, price, description, rating...
+    4. Put product in cart
+    5. See cart with choose products, quantity, single price and subtotal
+    6. Update quantity in cart
+    7. Remove product from cart
+    8. Empty cart
+    9. Sent order to back API
+    10. Receive feedback from https://fakestoreapi.com/ with order id (number)  
+### The challenge
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+It is necessary to create a mini eCommerce site using React and https://fakestoreapi.com/
+### Screenshot
 
-### `npm run build`
+![Desktop  ](./screenshots/dt.png)
+![Tablet ](./screenshots/tablet.png)
+![Tablet landscape ](./screenshots/tablet-ls.png)
+![Tablet Modal ](./screenshots/tablet-modal.png)
+![Tablet Modal landscape ](./screenshots/tablet-modal-ls.png)
+![Mobile ](./screenshots/mobile.png)
+![Mobile landscape ](./screenshots/mobile-ls.png)
+![Mobile Modal ThankYou](./screenshots/mobile-thank.png)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Links
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Solution URL: [GitHub](https://github.com/tatjama/zadatak9-e-commerce-app-react/tree/develop)
+- Preview: [Vercel](https://zadatak9-e-commerce-app-react-hpf6c3k6r-tatjana.vercel.app/)
+- Live Site URL: [Vercel](https://zadatak9-e-commerce-app-react.vercel.app/)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## My process
 
-### `npm run eject`
+1. Create a new project with [Create React App](https://github.com/facebook/create-react-app).
+2. Initializing git repositories main and develop
+3. Import git repositories to the Vercel project
+4. Create React Components
+5. import npm Material UI
+6. Style for Desktop 
+7. Responsive Mobile and Tablet style
+8. Create Navigation
+9. Create Hooks
+10. Create Error Handler
+11. Manual Test for bugs
+12. Create screenshots
+13. Change README-template.md to README.md
+14. Open Pull request
+15. Solve Issue
+16. Merge develop branch into master branch
+### Built with
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+1. React.js
+2. Material design
+3. CSS custom properties
+4. localStorage
+5. fakeStoreAPI
+## Author
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Website - [Tatjana Markovic](https://my-react-portfolio-tatjana.vercel.app/)
+- LinkedIn - [Tatjana Marković](https://www.linkedin.com/in/tatjana-markovi%C4%87-919501189/)
+- GitHub - [tatjama](https://github.com/tatjama)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
